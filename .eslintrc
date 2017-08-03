@@ -3,6 +3,7 @@
 	"rules": {
 		"indent": ["error", 2],
 		"semi": ["error", "never"],
-    "react/jsx-tag-spacing": ["error", 2]
+   "react/jsx-indent-props": ["error", 2],
+   "react/jsx-no-bind": 1
 	}
 }
