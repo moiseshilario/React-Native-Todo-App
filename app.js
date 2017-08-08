@@ -5,7 +5,6 @@ import {
   Keyboard,
   View,
   Platform,
-  Text,
   TouchableWithoutFeedback,
   StyleSheet
 } from 'react-native'
@@ -14,6 +13,14 @@ import Header from './header'
 import Footer from './footer'
 import Separator from './separator'
 import Row from './row'
+
+const filterItems = (filter, items) => (
+  items.filter((item) => {
+    if (filter === 'ALL') return true
+    if (filter === 'COMPLETED') return item.complete
+    if (filter === 'ACTIVE') return !item.complete
+  })
+)
 
 export default class App extends Component {
   handleAddItem = () => {
@@ -28,9 +35,17 @@ export default class App extends Component {
     ]
     this.setState({
       items: newItems,
+      filteredItems: filterItems(this.state.filter, newItems),
       value: ''
     })
-    console.table(newItems)
+  }
+
+  handleFilter = (filter) => {
+    this.setState({
+      filteredItems: filterItems(filter, this.state.items),
+      filter
+    })
+    console.table(this.state.items)
   }
 
   handleToggleAllComplete = () => {
@@ -42,6 +57,7 @@ export default class App extends Component {
     console.table(newItems)
     this.setState({
       items: newItems,
+      filteredItems: filterItems(this.state.filter, newItems),
       allComplete: complete
     })
   }
@@ -55,7 +71,8 @@ export default class App extends Component {
       }
     })
     this.setState({
-      items: newItems
+      items: newItems,
+      filteredItems: filterItems(this.state.filter, newItems)
     })
   }
 
@@ -64,7 +81,8 @@ export default class App extends Component {
       item.key !== key
     ))
     this.setState({
-      items: newItems
+      items: newItems,
+      filteredItems: filterItems(this.state.filter, newItems)
     })
   }
 
@@ -72,9 +90,10 @@ export default class App extends Component {
     super(props)
     this.state = {
       allComplete: false,
-      value: '',
-      items: []
-
+      filter: 'ALL',
+      items: [],
+      filteredItems: [],
+      value: ''
     }
   }
 
@@ -102,13 +121,16 @@ export default class App extends Component {
         <View style={styles.content} >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
             <FlatList
-              data={this.state.items}
+              data={this.state.filteredItems}
               renderItem={this.renderItem}
               ItemSeparatorComponent={this.renderSeparator}
             />
           </TouchableWithoutFeedback>
         </View>
-        <Footer />
+        <Footer
+          onFilter={this.handleFilter}
+          filter={this.state.filter}
+        />
       </View>
     )
   }
