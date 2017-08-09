@@ -4,18 +4,30 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  Switch
+  Switch,
+  TextInput
 } from 'react-native'
 
-const Row = ({ text, complete, onComplete, onRemove }) => (
-  <View style={styles.container}>
-    <Switch
-      value={complete}
-      onValueChange={onComplete}
-    />
+const Row = ({
+  todo,
+  onComplete,
+  onRemove,
+  onUpdate,
+  onToggleEdit
+}) => {
+  const editingComponent = (
     <View style={styles.textWrap}>
-      <Text style={[styles.text, complete && styles.complete]}>{text}</Text>
+      <TextInput
+        autoFocus
+        multiline
+        onChangeText={onUpdate}
+        value={todo.text}
+        style={styles.input}
+      />
     </View>
+  )
+
+  const removeButton = (
     <TouchableOpacity
       onPress={onRemove}
       style={styles.delete}
@@ -24,8 +36,37 @@ const Row = ({ text, complete, onComplete, onRemove }) => (
         {String.fromCharCode(10060)}
       </Text>
     </TouchableOpacity>
-  </View>
-)
+  )
+
+  const textComponent = (
+    <TouchableOpacity
+      style={styles.textWrap}
+      onLongPress={() => onToggleEdit(true)}
+    >
+      <Text style={[styles.text, todo.complete && styles.complete]}>{todo.text}</Text>
+    </TouchableOpacity>
+  )
+
+  const doneButton = (
+    <TouchableOpacity
+      onPress={() => onToggleEdit(false)}
+      style={styles.done}
+    >
+      <Text style={styles.doneText}>Save</Text>
+    </TouchableOpacity>
+  )
+
+  return (
+    <View style={styles.container} >
+      <Switch
+        value={todo.complete}
+        onValueChange={onComplete}
+      />
+      {todo.editing ? editingComponent : textComponent}
+      {todo.editing ? doneButton : removeButton}
+    </View >
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +88,23 @@ const styles = StyleSheet.create({
   },
   delete: {
     alignSelf: 'center'
+  },
+  done: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#7be290',
+    padding: 7
+  },
+  doneText: {
+    color: '#4d4d4d',
+    fontSize: 20
+  },
+  input: {
+    height: 100,
+    flex: 1,
+    fontSize: 24,
+    padding: 0,
+    color: '#4d4d4d'
   }
 })
 

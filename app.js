@@ -74,6 +74,29 @@ export default class App extends Component {
     this.updateList(newItems)
   }
 
+  handleUpdateText = (key, text) => {
+    const newItems = this.state.items.map((item) => {
+      if (item.key !== key) return item
+      return {
+        ...item,
+        text
+      }
+    })
+    this.updateList(newItems)
+  }
+
+  handleToggleEditing = (key, editing) => {
+    const newItems = this.state.items.map((item) => {
+      if (item.key !== key) return item
+      return {
+        ...item,
+        editing
+      }
+    })
+    this.updateList(newItems)
+  }
+
+
   handleRemoveItem(key) {
     const newItems = this.state.items.filter((item) => (
       item.key !== key
@@ -97,10 +120,10 @@ export default class App extends Component {
     AsyncStorage.getItem('items').then((json) => {
       try {
         const items = JSON.parse(json)
-
         this.updateList(items, { loading: false })
       }
       catch (e) {
+        console.log(e)
         this.setState({
           loading: false
         })
@@ -110,9 +133,10 @@ export default class App extends Component {
 
   renderItem = ({ item }) => (
     <Row
-      text={item.text}
-      complete={item.complete}
+      todo={item}
       onComplete={(complete) => this.handleToggleComplete(item.key, complete)}
+      onUpdate={(text) => this.handleUpdateText(item.key, text)}
+      onToggleEdit={(editing) => this.handleToggleEditing(item.key, editing)}
       onRemove={() => this.handleRemoveItem(item.key)}
     />
   )
