@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
 import {
+  ActivityIndicator,
+  AsyncStorage,
   FlatList,
   Keyboard,
   View,
@@ -23,6 +25,15 @@ const filterItems = (filter, items) => (
 )
 
 export default class App extends Component {
+  updateList = (items, rest = {}) => {
+    this.setState({
+      items,
+      filteredItems: filterItems(this.state.filter, items),
+      ...rest
+    })
+    AsyncStorage.setItem('items', JSON.stringify(items))
+  }
+
   handleAddItem = () => {
     if (!this.state.value) return
     const newItems = [
@@ -33,11 +44,7 @@ export default class App extends Component {
         complete: false
       }
     ]
-    this.setState({
-      items: newItems,
-      filteredItems: filterItems(this.state.filter, newItems),
-      value: ''
-    })
+    this.updateList(newItems, { value: '' })
   }
 
   handleFilter = (filter) => {
@@ -45,7 +52,6 @@ export default class App extends Component {
       filteredItems: filterItems(filter, this.state.items),
       filter
     })
-    console.table(this.state.items)
   }
 
   handleToggleAllComplete = () => {
@@ -54,12 +60,7 @@ export default class App extends Component {
       ...item,
       complete
     }))
-    console.table(newItems)
-    this.setState({
-      items: newItems,
-      filteredItems: filterItems(this.state.filter, newItems),
-      allComplete: complete
-    })
+    this.updateList(newItems, { allComplete: complete })
   }
 
   handleToggleComplete = (key, complete) => {
@@ -70,20 +71,14 @@ export default class App extends Component {
         complete
       }
     })
-    this.setState({
-      items: newItems,
-      filteredItems: filterItems(this.state.filter, newItems)
-    })
+    this.updateList(newItems)
   }
 
   handleRemoveItem(key) {
     const newItems = this.state.items.filter((item) => (
       item.key !== key
     ))
-    this.setState({
-      items: newItems,
-      filteredItems: filterItems(this.state.filter, newItems)
-    })
+    this.updateList(newItems)
   }
 
   constructor(props) {
@@ -93,8 +88,24 @@ export default class App extends Component {
       filter: 'ALL',
       items: [],
       filteredItems: [],
+      loading: true,
       value: ''
     }
+  }
+
+  componentWillMount = () => {
+    AsyncStorage.getItem('items').then((json) => {
+      try {
+        const items = JSON.parse(json)
+
+        this.updateList(items, { loading: false })
+      }
+      catch (e) {
+        this.setState({
+          loading: false
+        })
+      }
+    })
   }
 
   renderItem = ({ item }) => (
@@ -107,7 +118,6 @@ export default class App extends Component {
   )
 
   renderSeparator = () => <Separator />
-
 
   render() {
     return (
@@ -128,9 +138,17 @@ export default class App extends Component {
           </TouchableWithoutFeedback>
         </View>
         <Footer
-          onFilter={this.handleFilter}
+          count={filterItems('ACTIVE', this.state.items).length}
           filter={this.state.filter}
+          onFilter={this.handleFilter}
         />
+        {this.state.loading && <View style={styles.loading}>
+          <ActivityIndicator
+            animating
+            size="large"
+          />
+        </View>
+        }
       </View>
     )
   }
@@ -146,6 +164,16 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1
+  },
+  loading: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,.2)'
   },
   todoItem: {
     padding: 16,
