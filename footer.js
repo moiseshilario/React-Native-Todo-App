@@ -7,8 +7,9 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-const Footer = ({ filter, onFilter }) => (
+const Footer = ({ count, filter, onFilter }) => (
   <View style={styles.container}>
+     <Text>{count} count</Text>
     <View style={styles.filters} >
       <TouchableOpacity
         style={[styles.filter, filter === 'ALL' && styles.selected]}
@@ -34,15 +35,14 @@ const Footer = ({ filter, onFilter }) => (
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'space-between'
-  },
-  filters: {
+    padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
+  },
+  filters: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
   filter: {
     padding: 8,
