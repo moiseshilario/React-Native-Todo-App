@@ -16,34 +16,34 @@ import Footer from './components/footer'
 import Separator from './components/separator'
 import Row from './components/row'
 
-const filterItems = (filter, items) => (
-  items.filter((item) => {
+const filterTodos = (filter, todos) => (
+  todos.filter((todo) => {
     if (filter === 'ALL') return true
-    if (filter === 'COMPLETED') return item.complete
-    if (filter === 'ACTIVE') return !item.complete
+    if (filter === 'COMPLETED') return todo.complete
+    if (filter === 'ACTIVE') return !todo.complete
   })
 )
 
 export default class App extends Component {
-  updateList = (items, rest = {}) => {
+  updateList = (todos, rest = {}) => {
     this.setState({
-      items,
+      todos,
       ...rest
     })
-    AsyncStorage.setItem('items', JSON.stringify(items))
+    AsyncStorage.setItem('todos', JSON.stringify(todos))
   }
 
   handleAddItem = () => {
     if (!this.state.value) return
-    const newItems = [
-      ...this.state.items,
+    const newTodos = [
+      ...this.state.todos,
       {
         key: Date.now(),
         text: this.state.value,
         complete: false
       }
     ]
-    this.updateList(newItems, { value: '' })
+    this.updateList(newTodos, { value: '' })
   }
 
   handleFilter = (filter) => {
@@ -52,52 +52,52 @@ export default class App extends Component {
 
   handleToggleAllComplete = () => {
     const complete = !this.state.allComplete
-    const newItems = this.state.items.map((item) => ({
-      ...item,
+    const newTodos = this.state.todos.map((todo) => ({
+      ...todo,
       complete
     }))
-    this.updateList(newItems, { allComplete: complete })
+    this.updateList(newTodos, { allComplete: complete })
   }
 
   handleToggleComplete = (key, complete) => {
-    const newItems = this.state.items.map((item) => {
-      if (item.key !== key) return item
+    const newTodos = this.state.todos.map((todo) => {
+      if (todo.key !== key) return todo
       return {
-        ...item,
+        ...todo,
         complete
       }
     })
-    this.updateList(newItems)
+    this.updateList(newTodos)
   }
 
   handleUpdateText = (key, text) => {
-    const newItems = this.state.items.map((item) => {
-      if (item.key !== key) return item
+    const newTodos = this.state.todos.map((todo) => {
+      if (todo.key !== key) return todo
       return {
-        ...item,
+        ...todo,
         text
       }
     })
-    this.updateList(newItems)
+    this.updateList(newTodos)
   }
 
   handleToggleEditing = (key, editing) => {
-    const newItems = this.state.items.map((item) => {
-      if (item.key !== key) return item
+    const newTodos = this.state.todos.map((todo) => {
+      if (todo.key !== key) return todo
       return {
-        ...item,
+        ...todo,
         editing
       }
     })
-    this.updateList(newItems)
+    this.updateList(newTodos)
   }
 
 
   handleRemoveItem(key) {
-    const newItems = this.state.items.filter((item) => (
-      item.key !== key
+    const newTodos = this.state.todos.filter((todo) => (
+      todo.key !== key
     ))
-    this.updateList(newItems)
+    this.updateList(newTodos)
   }
 
   constructor(props) {
@@ -105,17 +105,17 @@ export default class App extends Component {
     this.state = {
       allComplete: false,
       filter: 'ALL',
-      items: [],
+      todos: [],
       loading: true,
       value: ''
     }
   }
 
   componentWillMount = () => {
-    AsyncStorage.getItem('items').then((json) => {
+    AsyncStorage.getItem('todos').then((json) => {
       try {
-        const items = JSON.parse(json)
-        this.updateList(items, { loading: false })
+        const todos = JSON.parse(json)
+        this.updateList(todos, { loading: false })
       }
       catch (e) {
         this.setState({
@@ -149,14 +149,14 @@ export default class App extends Component {
         <View style={styles.content} >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
             <FlatList
-              data={filterItems(this.state.filter, this.state.items)}
+              data={filterTodos(this.state.filter, this.state.todos)}
               renderItem={this.renderItem}
               ItemSeparatorComponent={this.renderSeparator}
             />
           </TouchableWithoutFeedback>
         </View>
         <Footer
-          count={filterItems('ACTIVE', this.state.items).length}
+          count={filterTodos('ACTIVE', this.state.todos).length}
           filter={this.state.filter}
           onFilter={this.handleFilter}
         />
