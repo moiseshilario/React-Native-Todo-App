@@ -11,7 +11,7 @@ const Header = ({
   onToggleAllComplete,
   value,
   onChange,
-  onAddItem
+  onAddTodo
 }) => (
     <View style={styles.header}>
       <TouchableOpacity
@@ -24,7 +24,7 @@ const Header = ({
       <TextInput
         value={value}
         onChangeText={onChange}
-        onSubmitEditing={onAddItem}
+        onSubmitEditing={onAddTodo}
         blurOnSubmit={false}
         placeholder="What needs to be done?"
         returnKeyType="done"

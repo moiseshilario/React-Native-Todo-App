@@ -119,6 +119,7 @@ export default class App extends Component {
       }
       catch (e) {
         this.setState({
+          todos: [],
           loading: false
         })
       }
@@ -142,8 +143,8 @@ export default class App extends Component {
       <View style={styles.container}>
         <Header
           value={this.state.value}
-          onAddItem={this.handleAddItem}
-          onChange={(value => this.setState({ value }))}
+          onAddTodo={this.handleAddItem}
+          onChange={value => this.setState({ value })}
           onToggleAllComplete={this.handleToggleAllComplete}
         />
         <View style={styles.content} >
