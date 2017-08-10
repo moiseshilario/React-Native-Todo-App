@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Platform,
   Text,
   TouchableOpacity,
   View,
@@ -51,9 +52,9 @@ const Row = ({
   const doneButton = (
     <TouchableOpacity
       onPress={() => onToggleEdit(false)}
-      style={styles.done}
+      style={Platform.OS === 'android' && styles.done}
     >
-      <Text style={styles.doneText}>Save</Text>
+      <Text style={styles.doneText}>{Platform.OS === 'ios'? String.fromCodePoint(128190): 'Save'}</Text>
     </TouchableOpacity>
   )
 
@@ -88,7 +89,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#4d4d4d',
     textAlignVertical: 'top'
-
   },
   delete: {
     alignSelf: 'center'
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   done: {
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#7be290',
+    borderColor: '#00BBFF',
     padding: 7
   },
   doneText: {
