@@ -28,7 +28,6 @@ export default class App extends Component {
   updateList = (items, rest = {}) => {
     this.setState({
       items,
-      filteredItems: filterItems(this.state.filter, items),
       ...rest
     })
     AsyncStorage.setItem('items', JSON.stringify(items))
@@ -48,10 +47,7 @@ export default class App extends Component {
   }
 
   handleFilter = (filter) => {
-    this.setState({
-      filteredItems: filterItems(filter, this.state.items),
-      filter
-    })
+    this.setState({ filter })
   }
 
   handleToggleAllComplete = () => {
@@ -110,7 +106,6 @@ export default class App extends Component {
       allComplete: false,
       filter: 'ALL',
       items: [],
-      filteredItems: [],
       loading: true,
       value: ''
     }
@@ -154,7 +149,7 @@ export default class App extends Component {
         <View style={styles.content} >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
             <FlatList
-              data={this.state.filteredItems}
+              data={filterItems(this.state.filter, this.state.items)}
               renderItem={this.renderItem}
               ItemSeparatorComponent={this.renderSeparator}
             />
