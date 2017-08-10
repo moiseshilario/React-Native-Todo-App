@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   Text,
   TextInput,
@@ -7,30 +7,31 @@ import {
   StyleSheet
 } from 'react-native'
 
-export default class Header extends Component {
-  render() {
-    return (
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={this.props.onToggleAllComplete}
-        >
-          <Text style={styles.toggleIcon}>
-            {String.fromCharCode(10003)}
-          </Text>
-        </TouchableOpacity>
-        <TextInput
-          value={this.props.value}
-          onChangeText={this.props.onChange}
-          onSubmitEditing={this.props.onAddItem}
-          blurOnSubmit={false}
-          placeholder="What needs to be done?"
-          returnKeyType="done"
-          style={styles.input}
-        />
-      </View>
-    )
-  }
-}
+const Header = ({
+  onToggleAllComplete,
+  value,
+  onChange,
+  onAddItem
+}) => (
+    <View style={styles.header}>
+      <TouchableOpacity
+        onPress={onToggleAllComplete}
+      >
+        <Text style={styles.toggleIcon}>
+          {String.fromCharCode(10003)}
+        </Text>
+      </TouchableOpacity>
+      <TextInput
+        value={value}
+        onChangeText={onChange}
+        onSubmitEditing={onAddItem}
+        blurOnSubmit={false}
+        placeholder="What needs to be done?"
+        returnKeyType="done"
+        style={styles.input}
+      />
+    </View>
+  )
 
 const styles = StyleSheet.create({
   header: {
@@ -52,3 +53,5 @@ const styles = StyleSheet.create({
     marginBottom: 16
   }
 })
+
+export default Header
