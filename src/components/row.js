@@ -23,6 +23,7 @@ const Row = ({
         onChangeText={onUpdate}
         value={todo.text}
         style={styles.input}
+        underlineColorAndroid="#F5F5F5"
       />
     </View>
   )
@@ -78,13 +79,16 @@ const styles = StyleSheet.create({
   textWrap: {
     flex: 1,
     marginHorizontal: 10
+
   },
   complete: {
     textDecorationLine: 'line-through'
   },
   text: {
     fontSize: 20,
-    color: '#4d4d4d'
+    color: '#4d4d4d',
+    textAlignVertical: 'top'
+
   },
   delete: {
     alignSelf: 'center'
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
   input: {
     height: 100,
     flex: 1,
-    fontSize: 24,
+    fontSize: 22,
     padding: 0,
     color: '#4d4d4d'
   }

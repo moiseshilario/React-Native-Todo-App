@@ -11,10 +11,10 @@ import {
   StyleSheet
 } from 'react-native'
 
-import Header from './header'
-import Footer from './footer'
-import Separator from './separator'
-import Row from './row'
+import Header from './components/header'
+import Footer from './components/footer'
+import Separator from './components/separator'
+import Row from './components/row'
 
 const filterItems = (filter, items) => (
   items.filter((item) => {
@@ -123,7 +123,6 @@ export default class App extends Component {
         this.updateList(items, { loading: false })
       }
       catch (e) {
-        console.log(e)
         this.setState({
           loading: false
         })
