@@ -1,0 +1,6 @@
+export const ADD_TODO = 'ADD_TODO'
+export const EDIT_TODO = 'EDIT_TODO'
+export const TOGGLE_TODO = 'TOGGLE_TODO'
+export const TOGGLE_ALL_COMPLETE = 'TOGGLE_ALL_COMPLETE'
+export const SET_FILTER = 'SET_FILTER'
+export const SET_LOADING = 'SET_LOADING'
