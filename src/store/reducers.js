@@ -28,10 +28,10 @@ const todo = (state, action) => {
         }
       }
       return state
-    case types.TOGGLE_ALL_COMPLETE:
+    case types.CHANGE_ALL_COMPLETED:
       return {
         ...todo,
-        completed: !action.allCompleted
+        completed: action.allCompleted
       }
     default:
       return state
@@ -46,16 +46,16 @@ const todos = (state = [], action) => {
         todo(undefined, action)
       ]
     case types.TOGGLE_TODO:
-      return state.map((todo) =>
-        todo(todo, action)
+      return state.map((t) =>
+        todo(t, action)
       )
     case types.EDIT_TODO:
       return state.map(todo =>
         todo(todo, action)
       )
-    case types.TOGGLE_ALL_COMPLETE:
-      return state.map(todo =>
-        todo(todo, action)
+    case types.CHANGE_ALL_COMPLETED:
+      return state.map(t =>
+        todo(t, action)
       )
     default:
       return state
@@ -82,7 +82,7 @@ const isLoading = (state = true, action) => {
 
 const allCompleted = (state = false, action) => {
   switch (action.type) {
-    case types.TOGGLE_ALL_COMPLETE:
+    case types.TOGGLE_ALL_COMPLETED:
       return !action.allCompleted
     default:
       return state
