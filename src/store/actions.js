@@ -27,13 +27,19 @@ export const setLoading = (loading) => ({
   loading
 })
 
-export const toggleAllComplete = (allComplete) => ({
-  type: types.TOGGLE_ALL_COMPLETE,
-  allComplete
+export const toggleAllCompleted = (allCompleted) => ({
+  type: types.TOGGLE_ALL_COMPLETED,
+  allCompleted
+})
+
+export const changeAllCompleted = (allCompleted) => ({
+  type: types.CHANGE_ALL_COMPLETED,
+  allCompleted
 })
 
 export const toggleTodo = (key) => ({
   type: types.TOGGLE_TODO,
   key
 })
+
 
