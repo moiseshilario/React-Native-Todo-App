@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { applyMiddleware, createStore } from 'redux'
 
 import {
   ActivityIndicator,
@@ -12,24 +11,19 @@ import {
   StyleSheet
 } from 'react-native'
 
-import logger from 'redux-logger'
-
 import Header from './components/header'
 import Footer from './components/footer'
 import Separator from './components/separator'
 import Row from './components/row'
-import todoAppReducer from './store/reducers'
-import * as actions from './store/actions'
-
-const store = createStore(todoAppReducer, applyMiddleware(logger))
 
 const filterTodos = (filter, todos) => (
   todos.filter((todo) => {
     if (filter === 'SHOW_ALL') return true
-    if (filter === 'SHOW_COMPLETED') return todo.complete
-    if (filter === 'SHOW_ACTIVE') return !todo.complete
+    if (filter === 'SHOW_COMPLETED') return todo.completed
+    if (filter === 'SHOW_ACTIVE') return !todo.completed
   })
 )
+
 
 export default class TodoApp extends Component {
   updateList = (todos, rest = {}) => {
@@ -41,22 +35,24 @@ export default class TodoApp extends Component {
   }
 
   handleAddItem = () => {
+    console.log(this.state)
+    console.log(this.props)
     let key = Date.now()
-    store.dispatch(actions.addTodo(key, this.state.value))
+    this.props.addTodo(key, this.state.value)
     this.setState({ value: '' })
   }
 
   handleFilter = (filter) => {
-    store.dispatch(actions.setFilter(filter))
+    this.props.setFilter(filter)
   }
 
   handleToggleAllCompleted = () => {
-    store.dispatch(actions.toggleAllCompleted(store.getState().allCompleted))
-    store.dispatch(actions.changeAllCompleted(store.getState().allCompleted))
+    this.props.toggleAllCompleted(this.props.allCompleted)
+    this.props.changeAllCompleted(this.props.allCompleted)
   }
 
-  handleToggleComplete = (key, complete) => {
-    store.dispatch(actions.toggleTodo(key))
+  handleToggleCompleted = (key) => {
+    this.props.toggleTodo(key)
   }
 
   handleUpdateText = (key, text) => {
@@ -118,7 +114,7 @@ export default class TodoApp extends Component {
   renderItem = ({ item }) => (
     <Row
       todo={item}
-      onComplete={() => this.handleToggleComplete(item.key)}
+      onCompleted={() => this.handleToggleCompleted(item.key)}
       onUpdate={(text) => this.handleUpdateText(item.key, text)}
       onToggleEdit={(editing) => this.handleToggleEditing(item.key, editing)}
       onRemove={() => this.handleRemoveItem(item.key)}
@@ -128,6 +124,11 @@ export default class TodoApp extends Component {
   renderSeparator = () => <Separator />
 
   render() {
+    const {
+      todos,
+      filter
+    } = this.props
+
     return (
       <View style={styles.container}>
         <Header
@@ -139,15 +140,15 @@ export default class TodoApp extends Component {
         <View style={styles.content} >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
             <FlatList
-              data={filterTodos(store.getState().filter, store.getState().todos)}
+              data={filterTodos(filter, todos)}
               renderItem={this.renderItem}
               ItemSeparatorComponent={this.renderSeparator}
             />
           </TouchableWithoutFeedback>
         </View>
         <Footer
-          count={filterTodos('SHOW_ACTIVE', store.getState().todos).length}
-          filter={store.getState().filter}
+          count={filterTodos('SHOW_ACTIVE', todos).length}
+          filter={filter}
           onFilter={this.handleFilter}
         />
         {this.state.loading && <View style={styles.loading}>

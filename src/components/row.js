@@ -11,7 +11,7 @@ import {
 
 const Row = ({
   todo,
-  onComplete,
+  onCompleted,
   onRemove,
   onUpdate,
   onToggleEdit
@@ -45,7 +45,7 @@ const Row = ({
       style={styles.textWrap}
       onLongPress={() => onToggleEdit(true)}
     >
-      <Text style={[styles.text, todo.complete && styles.complete]}>{todo.text}</Text>
+      <Text style={[styles.text, todo.completed && styles.complete]}>{todo.text}</Text>
     </TouchableOpacity>
   )
 
@@ -61,9 +61,10 @@ const Row = ({
   return (
     <View style={styles.container} >
       <Switch
-        value={todo.complete}
-        onValueChange={onComplete}
+        value={todo.completed}
+        onValueChange={onCompleted}
       />
+      {console.log(todo)}
       {todo.editing ? editingComponent : textComponent}
       {todo.editing ? doneButton : removeButton}
     </View >
