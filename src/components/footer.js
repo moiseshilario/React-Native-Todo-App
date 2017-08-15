@@ -12,20 +12,20 @@ const Footer = ({ count, filter, onFilter }) => (
      <Text>{count} count</Text>
     <View style={styles.filters} >
       <TouchableOpacity
-        style={[styles.filter, filter === 'ALL' && styles.selected]}
-        onPress={() => onFilter('ALL')}
+        style={[styles.filter, filter === 'SHOW_ALL' && styles.selected]}
+        onPress={() => onFilter('SHOW_ALL')}
       >
         <Text>All</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.filter, filter === 'ACTIVE' && styles.selected]}
-        onPress={() => onFilter('ACTIVE')}
+        style={[styles.filter, filter === 'SHOW_ACTIVE' && styles.selected]}
+        onPress={() => onFilter('SHOW_ACTIVE')}
       >
         <Text>Active</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.filter, filter === 'COMPLETED' && styles.selected]}
-        onPress={() => onFilter('COMPLETED')}
+        style={[styles.filter, filter === 'SHOW_COMPLETED' && styles.selected]}
+        onPress={() => onFilter('SHOW_COMPLETED')}
       >
         <Text>Completed</Text>
       </TouchableOpacity>
