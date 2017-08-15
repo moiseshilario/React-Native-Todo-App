@@ -30,7 +30,7 @@ const todo = (state, action) => {
       return state
     case types.CHANGE_ALL_COMPLETED:
       return {
-        ...todo,
+        ...state,
         completed: action.allCompleted
       }
     default:
