@@ -32,7 +32,9 @@ const mapDispatchToProps = (dispatch) => ({
   deleteTodo: (index) => dispatch(actions.deleteTodo(index)),
   setFilter: (filter) => dispatch(actions.setFilter(filter)),
   toggleAllCompleted: (allCompleted) => dispatch(actions.toggleAllCompleted(allCompleted)),
-  toggleTodo: (key) => dispatch(actions.toggleTodo(key))
+  toggleEditing: (key) => dispatch(actions.toggleEditing(key)),
+  toggleTodo: (key) => dispatch(actions.toggleTodo(key)),
+  updateTodo: (key, text) => dispatch(actions.updateTodo(key, text))
 })
 
 const TodoApp = connect(

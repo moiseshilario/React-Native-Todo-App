@@ -25,13 +25,6 @@ const filterTodos = (filter, todos) => (
 )
 
 export default class TodoApp extends Component {
-  updateList = (todos, rest = {}) => {
-    this.setState({
-      todos,
-      ...rest
-    })
-    AsyncStorage.setItem('todos', JSON.stringify(todos))
-  }
 
   handleAddItem = () => {
     let key = Date.now()
@@ -53,27 +46,12 @@ export default class TodoApp extends Component {
   }
 
   handleUpdateText = (key, text) => {
-    const newTodos = this.state.todos.map((todo) => {
-      if (todo.key !== key) return todo
-      return {
-        ...todo,
-        text
-      }
-    })
-    this.updateList(newTodos)
+    this.props.updateTodo(key,text)
   }
 
-  handleToggleEditing = (key, editing) => {
-    const newTodos = this.state.todos.map((todo) => {
-      if (todo.key !== key) return todo
-      return {
-        ...todo,
-        editing
-      }
-    })
-    this.updateList(newTodos)
+  handleToggleEditing = (key) => {
+    this.props.toggleEditing(key)
   }
-
 
   handleRemoveItem(key) {
     const index = this.props.todos.findIndex(todo => todo.key === key)
@@ -89,7 +67,7 @@ export default class TodoApp extends Component {
 
   componentWillMount = () => {
     this.setState({
-      todos: [],
+      //todos: [],
       loading: false
     })
     // AsyncStorage.getItem('todos').then((json) => {
@@ -111,7 +89,7 @@ export default class TodoApp extends Component {
       todo={item}
       onCompleted={() => this.handleToggleCompleted(item.key)}
       onUpdate={(text) => this.handleUpdateText(item.key, text)}
-      onToggleEdit={(editing) => this.handleToggleEditing(item.key, editing)}
+      onToggleEditing={() => this.handleToggleEditing(item.key)}
       onRemove={() => this.handleRemoveItem(item.key)}
     />
   )
