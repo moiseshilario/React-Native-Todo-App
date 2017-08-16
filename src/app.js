@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { createStore, applyMiddleware } from 'redux'
 
 import {
@@ -27,7 +27,7 @@ const mapStateToProps = ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  addTodo: (key,text) => dispatch(actions.addTodo(key,text)),
+  addTodo: (key, text) => dispatch(actions.addTodo(key, text)),
   changeAllCompleted: (allCompleted) => dispatch(actions.changeAllCompleted(allCompleted)),
   deleteTodo: (index) => dispatch(actions.deleteTodo(index)),
   setFilter: (filter) => dispatch(actions.setFilter(filter)),
@@ -40,12 +40,11 @@ const TodoApp = connect(
   mapDispatchToProps
 )(todoApp)
 
-export default class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <TodoApp />
-      </Provider>
-    )
-  }
-}
+const App = () => (
+  <Provider store={store}>
+    <TodoApp />
+  </Provider>
+)
+
+export default App
+
