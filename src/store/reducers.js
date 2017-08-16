@@ -12,6 +12,19 @@ const todo = (state, action) => {
         completed: false,
         editing: false
       }
+    case types.CHANGE_ALL_COMPLETED:
+      return {
+        ...state,
+        completed: action.allCompleted
+      }
+    case types.TOGGLE_EDITING:
+      if (state.key === action.key) {
+        return {
+          ...state,
+          editing: !state.editing
+        }
+      }
+      return state
     case types.TOGGLE_TODO:
       if (state.key === action.key) {
         return {
@@ -20,19 +33,14 @@ const todo = (state, action) => {
         }
       }
       return state
-    case types.EDIT_TODO:
+    case types.UPDATE_TODO:
       if (state.key === action.key) {
         return {
           ...state,
-          editing: !state.editing
+          text: action.text
         }
       }
       return state
-    case types.CHANGE_ALL_COMPLETED:
-      return {
-        ...state,
-        completed: action.allCompleted
-      }
     default:
       return state
   }
@@ -45,14 +53,6 @@ const todos = (state = [], action) => {
         ...state,
         todo(undefined, action)
       ]
-    case types.TOGGLE_TODO:
-      return state.map((t) =>
-        todo(t, action)
-      )
-    case types.EDIT_TODO:
-      return state.map(todo =>
-        todo(todo, action)
-      )
     case types.CHANGE_ALL_COMPLETED:
       return state.map(t =>
         todo(t, action)
@@ -62,6 +62,18 @@ const todos = (state = [], action) => {
         ...state.slice(0, action.index),
         ...state.slice(action.index + 1)
       ]
+    case types.TOGGLE_EDITING:
+      return state.map(t =>
+        todo(t,action)
+      )
+    case types.TOGGLE_TODO:
+      return state.map((t) =>
+        todo(t, action)
+      )
+    case types.UPDATE_TODO:
+      return state.map(t =>
+        todo(t, action)
+      )
     default:
       return state
   }

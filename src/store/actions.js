@@ -12,14 +12,14 @@ export const addTodo = (key, text) => ({
   key
 })
 
-export const editTodo = (key) => ({
-  type: types.EDIT_TODO,
-  key
-})
-
 export const deleteTodo = (index) => ({
   type: types.DELETE_TODO,
   index
+})
+
+export const changeAllCompleted = (allCompleted) => ({
+  type: types.CHANGE_ALL_COMPLETED,
+  allCompleted
 })
 
 export const setFilter = (filter) => ({
@@ -37,14 +37,20 @@ export const toggleAllCompleted = (allCompleted) => ({
   allCompleted
 })
 
-export const changeAllCompleted = (allCompleted) => ({
-  type: types.CHANGE_ALL_COMPLETED,
-  allCompleted
+export const toggleEditing = (key) => ({
+  type: types.TOGGLE_EDITING,
+  key
 })
 
 export const toggleTodo = (key) => ({
   type: types.TOGGLE_TODO,
   key
+})
+
+export const updateTodo = (key, text) => ({
+  type: types.UPDATE_TODO,
+  key,
+  text
 })
 
 
