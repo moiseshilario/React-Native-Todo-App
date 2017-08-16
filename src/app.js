@@ -28,10 +28,11 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch) => ({
   addTodo: (key,text) => dispatch(actions.addTodo(key,text)),
+  changeAllCompleted: (allCompleted) => dispatch(actions.changeAllCompleted(allCompleted)),
+  deleteTodo: (index) => dispatch(actions.deleteTodo(index)),
   setFilter: (filter) => dispatch(actions.setFilter(filter)),
-  toggleTodo: (key) => dispatch(actions.toggleTodo(key)),
   toggleAllCompleted: (allCompleted) => dispatch(actions.toggleAllCompleted(allCompleted)),
-  changeAllCompleted: (allCompleted) => dispatch(actions.changeAllCompleted(allCompleted))
+  toggleTodo: (key) => dispatch(actions.toggleTodo(key))
 })
 
 const TodoApp = connect(

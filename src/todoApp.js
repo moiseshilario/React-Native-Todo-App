@@ -24,7 +24,6 @@ const filterTodos = (filter, todos) => (
   })
 )
 
-
 export default class TodoApp extends Component {
   updateList = (todos, rest = {}) => {
     this.setState({
@@ -35,8 +34,6 @@ export default class TodoApp extends Component {
   }
 
   handleAddItem = () => {
-    console.log(this.state)
-    console.log(this.props)
     let key = Date.now()
     this.props.addTodo(key, this.state.value)
     this.setState({ value: '' })
@@ -79,10 +76,8 @@ export default class TodoApp extends Component {
 
 
   handleRemoveItem(key) {
-    const newTodos = this.state.todos.filter((todo) => (
-      todo.key !== key
-    ))
-    this.updateList(newTodos)
+    const index = this.props.todos.findIndex(todo => todo.key === key)
+    this.props.deleteTodo(index)
   }
 
   constructor(props) {

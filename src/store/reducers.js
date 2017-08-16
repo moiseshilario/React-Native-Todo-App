@@ -57,6 +57,11 @@ const todos = (state = [], action) => {
       return state.map(t =>
         todo(t, action)
       )
+    case types.DELETE_TODO:
+      return [
+        ...state.slice(0, action.index),
+        ...state.slice(action.index + 1)
+      ]
     default:
       return state
   }

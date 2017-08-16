@@ -17,6 +17,11 @@ export const editTodo = (key) => ({
   key
 })
 
+export const deleteTodo = (index) => ({
+  type: types.DELETE_TODO,
+  index
+})
+
 export const setFilter = (filter) => ({
   type: types.SET_FILTER,
   filter

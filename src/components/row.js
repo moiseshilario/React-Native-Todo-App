@@ -64,7 +64,6 @@ const Row = ({
         value={todo.completed}
         onValueChange={onCompleted}
       />
-      {console.log(todo)}
       {todo.editing ? editingComponent : textComponent}
       {todo.editing ? doneButton : removeButton}
     </View >

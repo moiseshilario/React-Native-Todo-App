@@ -1,5 +1,7 @@
 export const ADD_TODO = 'ADD_TODO'
+export const DELETE_TODO = 'DELETE_TODO'
 export const EDIT_TODO = 'EDIT_TODO'
+export const TOGGLE_EDIT = 'TOGGLE_EDIT'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const TOGGLE_ALL_COMPLETED = 'TOGGLE_ALL_COMPLETED'
 export const CHANGE_ALL_COMPLETED = 'CHANGE_ALL_COMPLETED'
