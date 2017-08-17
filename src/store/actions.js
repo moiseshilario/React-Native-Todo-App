@@ -22,6 +22,11 @@ export const changeAllCompleted = (allCompleted) => ({
   allCompleted
 })
 
+export const loadTodos = (todos) => ({
+  type: types.LOAD_TODOS,
+  todos
+})
+
 export const setFilter = (filter) => ({
   type: types.SET_FILTER,
   filter

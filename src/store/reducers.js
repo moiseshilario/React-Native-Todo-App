@@ -74,6 +74,8 @@ const todos = (state = [], action) => {
       return state.map(t =>
         todo(t, action)
       )
+    case types.LOAD_TODOS:
+      return action.todos
     default:
       return state
   }

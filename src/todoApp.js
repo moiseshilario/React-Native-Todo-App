@@ -25,6 +25,9 @@ const filterTodos = (filter, todos) => (
 )
 
 export default class TodoApp extends Component {
+  saveTodos = () => {
+    AsyncStorage.setItem('todos', JSON.stringify(this.props.todos))
+  }
 
   handleAddItem = () => {
     let key = Date.now()
@@ -46,7 +49,7 @@ export default class TodoApp extends Component {
   }
 
   handleUpdateText = (key, text) => {
-    this.props.updateTodo(key,text)
+    this.props.updateTodo(key, text)
   }
 
   handleToggleEditing = (key) => {
@@ -66,22 +69,22 @@ export default class TodoApp extends Component {
   }
 
   componentWillMount = () => {
-    this.setState({
-      //todos: [],
-      loading: false
+
+    AsyncStorage.getItem('todos').then((json) => {
+      try {
+        const allTodos = JSON.parse(json)
+        this.props.loadTodos(allTodos)
+        this.props.setLoading(false)
+      }
+      catch (e) {
+        this.props.todos = []
+        this.props.setLoading(false)
+      }
     })
-    // AsyncStorage.getItem('todos').then((json) => {
-    //   try {
-    //     const todos = JSON.parse(json)
-    //     this.updateList(todos, { loading: false })
-    //   }
-    //   catch (e) {
-    //     this.setState({
-    //       todos: [],
-    //       loading: false
-    //     })
-    //   }
-    // })
+  }
+
+  componentDidUpdate = () => {
+    this.saveTodos()
   }
 
   renderItem = ({ item }) => (
@@ -99,7 +102,8 @@ export default class TodoApp extends Component {
   render() {
     const {
       todos,
-      filter
+      filter,
+      loading
     } = this.props
 
     return (
@@ -124,7 +128,7 @@ export default class TodoApp extends Component {
           filter={filter}
           onFilter={this.handleFilter}
         />
-        {this.state.loading && <View style={styles.loading}>
+        {loading && <View style={styles.loading}>
           <ActivityIndicator
             animating
             size="large"
