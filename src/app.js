@@ -1,9 +1,13 @@
 import React from 'react'
-import { createStore, applyMiddleware } from 'redux'
 
 import {
-  Provider,
-  connect
+  applyMiddleware,
+  createStore
+} from 'redux'
+
+import {
+  connect,
+  Provider
 } from 'react-redux'
 
 import logger from 'redux-logger'
@@ -15,20 +19,19 @@ import * as actions from './store/actions'
 const store = createStore(todoAppReducer, applyMiddleware(logger))
 
 const mapStateToProps = ({
-  todos,
   allCompleted,
   filter,
-  isLoading
+  isLoading,
+  todos
 }) => ({
-  todos,
   allCompleted,
   filter,
-  isLoading
+  isLoading,
+  todos
 })
 
 const mapDispatchToProps = (dispatch) => ({
   addTodo: (key, text) => dispatch(actions.addTodo(key, text)),
-  changeAllCompleted: (allCompleted) => dispatch(actions.changeAllCompleted(allCompleted)),
   deleteTodo: (index) => dispatch(actions.deleteTodo(index)),
   loadTodos: (todos) => dispatch(actions.loadTodos(todos)),
   setFilter: (filter) => dispatch(actions.setFilter(filter)),

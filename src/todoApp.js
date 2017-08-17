@@ -7,14 +7,14 @@ import {
   Keyboard,
   View,
   Platform,
-  TouchableWithoutFeedback,
-  StyleSheet
+  StyleSheet,
+  TouchableWithoutFeedback
 } from 'react-native'
 
 import Header from './components/header'
 import Footer from './components/footer'
-import Separator from './components/separator'
 import Row from './components/row'
+import Separator from './components/separator'
 
 const filterTodos = (filter, todos) => (
   todos.filter((todo) => {
@@ -26,7 +26,10 @@ const filterTodos = (filter, todos) => (
 
 export default class TodoApp extends Component {
   saveTodos = () => {
-    AsyncStorage.setItem('todos', JSON.stringify(this.props.todos))
+    AsyncStorage.setItem('previousState', JSON.stringify({
+      todos: this.props.todos,
+      allCompleted: this.props.allCompleted
+    }))
   }
 
   handleAddItem = () => {
@@ -41,19 +44,18 @@ export default class TodoApp extends Component {
 
   handleToggleAllCompleted = () => {
     this.props.toggleAllCompleted(this.props.allCompleted)
-    this.props.changeAllCompleted(this.props.allCompleted)
   }
 
   handleToggleCompleted = (key) => {
     this.props.toggleTodo(key)
   }
 
-  handleUpdateText = (key, text) => {
-    this.props.updateTodo(key, text)
-  }
-
   handleToggleEditing = (key) => {
     this.props.toggleEditing(key)
+  }
+
+  handleUpdateText = (key, text) => {
+    this.props.updateTodo(key, text)
   }
 
   handleRemoveItem(key) {
@@ -69,11 +71,10 @@ export default class TodoApp extends Component {
   }
 
   componentWillMount = () => {
-
-    AsyncStorage.getItem('todos').then((json) => {
+    AsyncStorage.getItem('previousState').then((json) => {
       try {
-        const allTodos = JSON.parse(json)
-        this.props.loadTodos(allTodos)
+        const previousState = JSON.parse(json)
+        this.props.loadTodos(previousState)
         this.props.setLoading(false)
       }
       catch (e) {

@@ -1,9 +1,9 @@
 import * as types from './action-types'
 
 export const filters = {
+  SHOW_ACTIVE: 'SHOW_ACTIVE',
   SHOW_ALL: 'SHOW_ALL',
-  SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE'
+  SHOW_COMPLETED: 'SHOW_COMPLETED'
 }
 
 export const addTodo = (key, text) => ({
@@ -17,14 +17,10 @@ export const deleteTodo = (index) => ({
   index
 })
 
-export const changeAllCompleted = (allCompleted) => ({
-  type: types.CHANGE_ALL_COMPLETED,
-  allCompleted
-})
-
-export const loadTodos = (todos) => ({
+export const loadTodos = (previousState) => ({
   type: types.LOAD_TODOS,
-  todos
+  todos: previousState.todos,
+  allCompleted: previousState.allCompleted
 })
 
 export const setFilter = (filter) => ({

@@ -12,11 +12,6 @@ const todo = (state, action) => {
         completed: false,
         editing: false
       }
-    case types.CHANGE_ALL_COMPLETED:
-      return {
-        ...state,
-        completed: action.allCompleted
-      }
     case types.TOGGLE_EDITING:
       if (state.key === action.key) {
         return {
@@ -41,6 +36,11 @@ const todo = (state, action) => {
         }
       }
       return state
+    case types.TOGGLE_ALL_COMPLETED:
+      return {
+        ...state,
+        completed: !action.allCompleted
+      }
     default:
       return state
   }
@@ -53,10 +53,6 @@ const todos = (state = [], action) => {
         ...state,
         todo(undefined, action)
       ]
-    case types.CHANGE_ALL_COMPLETED:
-      return state.map(t =>
-        todo(t, action)
-      )
     case types.DELETE_TODO:
       return [
         ...state.slice(0, action.index),
@@ -64,13 +60,17 @@ const todos = (state = [], action) => {
       ]
     case types.TOGGLE_EDITING:
       return state.map(t =>
-        todo(t,action)
+        todo(t, action)
       )
     case types.TOGGLE_TODO:
       return state.map((t) =>
         todo(t, action)
       )
     case types.UPDATE_TODO:
+      return state.map(t =>
+        todo(t, action)
+      )
+    case types.TOGGLE_ALL_COMPLETED:
       return state.map(t =>
         todo(t, action)
       )
@@ -103,6 +103,8 @@ const allCompleted = (state = false, action) => {
   switch (action.type) {
     case types.TOGGLE_ALL_COMPLETED:
       return !action.allCompleted
+    case types.LOAD_TODOS:
+      return action.allCompleted
     default:
       return state
   }
