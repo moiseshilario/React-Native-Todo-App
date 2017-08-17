@@ -1,7 +1,7 @@
 {
 	"extends": "eslint-config-synacor",
 	"rules": {
-		"indent": ["error", 2],
+		"indent": ["error", 2, { "SwitchCase": 1 }],
 		"semi": ["error", "never"],
    "react/jsx-indent-props": ["error", 2],
    "react/jsx-no-bind": 1

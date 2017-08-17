@@ -1,0 +1,20 @@
+[
+  {
+    "key": 1,
+    "text": "1",
+    "completed": false,
+    "editing": false
+  },
+  {
+    "key": 2,
+    "text": "2",
+    "completed": false,
+    "editing": false
+  },
+  {
+    "key": 3,
+    "text": "3",
+    "completed": false,
+    "editing": false
+  }
+]

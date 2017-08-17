@@ -11,10 +11,10 @@ import {
 
 const Row = ({
   todo,
-  onComplete,
+  onCompleted,
   onRemove,
   onUpdate,
-  onToggleEdit
+  onToggleEditing
 }) => {
   const editingComponent = (
     <View style={styles.textWrap}>
@@ -43,15 +43,15 @@ const Row = ({
   const textComponent = (
     <TouchableOpacity
       style={styles.textWrap}
-      onLongPress={() => onToggleEdit(true)}
+      onLongPress={() => onToggleEditing(todo.key)}
     >
-      <Text style={[styles.text, todo.complete && styles.complete]}>{todo.text}</Text>
+      <Text style={[styles.text, todo.completed && styles.complete]}>{todo.text}</Text>
     </TouchableOpacity>
   )
 
   const doneButton = (
     <TouchableOpacity
-      onPress={() => onToggleEdit(false)}
+      onPress={() => onToggleEditing(todo.key)}
       style={Platform.OS === 'android' && styles.done}
     >
       <Text style={styles.doneText}>{Platform.OS === 'ios'? String.fromCodePoint(128190): 'Save'}</Text>
@@ -61,8 +61,8 @@ const Row = ({
   return (
     <View style={styles.container} >
       <Switch
-        value={todo.complete}
-        onValueChange={onComplete}
+        value={todo.completed}
+        onValueChange={onCompleted}
       />
       {todo.editing ? editingComponent : textComponent}
       {todo.editing ? doneButton : removeButton}

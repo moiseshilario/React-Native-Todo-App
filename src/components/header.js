@@ -8,14 +8,14 @@ import {
 } from 'react-native'
 
 const Header = ({
-  onToggleAllComplete,
+  onToggleAllCompleted,
   value,
   onChange,
   onAddTodo
 }) => (
     <View style={styles.header}>
       <TouchableOpacity
-        onPress={onToggleAllComplete}
+        onPress={onToggleAllCompleted}
       >
         <Text style={styles.toggleIcon}>
           {String.fromCharCode(10003)}
