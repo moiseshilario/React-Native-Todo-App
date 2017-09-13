@@ -54,33 +54,32 @@ const Row = ({
       onPress={() => onToggleEditing(todo.key)}
       style={Platform.OS === 'android' && styles.done}
     >
-      <Text style={styles.doneText}>{Platform.OS === 'ios'? String.fromCodePoint(128190): 'Save'}</Text>
+      <Text style={styles.doneText}>{Platform.OS === 'ios' ? String.fromCodePoint(128190) : 'Save'}</Text>
     </TouchableOpacity>
   )
 
   return (
     <View style={styles.container} >
-      <Switch
-        value={todo.completed}
-        onValueChange={onCompleted}
-      />
-      {todo.editing ? editingComponent : textComponent}
-      {todo.editing ? doneButton : removeButton}
+      <View style={styles.rowItem}>
+        <Switch
+          value={todo.completed}
+          onValueChange={onCompleted}
+        />
+        {todo.editing ? editingComponent : textComponent}
+        {todo.editing ? doneButton : removeButton}
+      </View>
     </View >
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between'
+    marginVertical: 5,
+    marginHorizontal: 10
   },
   textWrap: {
     flex: 1,
     marginHorizontal: 10
-
   },
   complete: {
     textDecorationLine: 'line-through'
@@ -109,6 +108,17 @@ const styles = StyleSheet.create({
     fontSize: 22,
     padding: 0,
     color: '#4d4d4d'
+  },
+  rowItem: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    elevation: 2,
+    backgroundColor: '#f5f5f5',
+    borderLeftWidth: 2,
+    borderLeftColor: 'orange'
   }
 })
 
