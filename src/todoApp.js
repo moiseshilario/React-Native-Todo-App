@@ -5,12 +5,13 @@ import {
   AsyncStorage,
   FlatList,
   Keyboard,
-  View,
   Platform,
+  View,
   StyleSheet,
   TouchableWithoutFeedback
 } from 'react-native'
 
+import AddTodoButton from './components/add-todo-button'
 import Header from './components/header'
 import Footer from './components/footer'
 import Row from './components/row'
@@ -120,10 +121,11 @@ export default class TodoApp extends Component {
             <FlatList
               data={filterTodos(filter, todos)}
               renderItem={this.renderItem}
-              ItemSeparatorComponent={this.renderSeparator}
+            //ItemSeparatorComponent={this.renderSeparator}
             />
           </TouchableWithoutFeedback>
         </View>
+        <AddTodoButton />
         <Footer
           count={filterTodos('SHOW_ACTIVE', todos).length}
           filter={filter}
@@ -144,7 +146,7 @@ export default class TodoApp extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#F0F0F0',
     ...Platform.select({
       ios: { paddingTop: 30 }
     })
