@@ -7,27 +7,29 @@ import {
   TouchableOpacity
 } from 'react-native'
 
+import { CYAN, CYAN_LIGHT } from '../styles/colors'
+
 const Footer = ({ count, filter, onFilter }) => (
   <View style={styles.container}>
-     <Text>{count} count</Text>
+
     <View style={styles.filters} >
       <TouchableOpacity
         style={[styles.filter, filter === 'SHOW_ALL' && styles.selected]}
         onPress={() => onFilter('SHOW_ALL')}
       >
-        <Text>All</Text>
+        <Text style={styles.text}>All</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.filter, filter === 'SHOW_ACTIVE' && styles.selected]}
         onPress={() => onFilter('SHOW_ACTIVE')}
       >
-        <Text>Active</Text>
+        <Text style={styles.text}>Active</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.filter, filter === 'SHOW_COMPLETED' && styles.selected]}
         onPress={() => onFilter('SHOW_COMPLETED')}
       >
-        <Text>Completed</Text>
+        <Text style={styles.text}>Completed</Text>
       </TouchableOpacity>
     </View>
   </View>
@@ -35,23 +37,29 @@ const Footer = ({ count, filter, onFilter }) => (
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: CYAN_LIGHT
   },
   filters: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'space-between'
   },
   filter: {
-    padding: 8,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: 'transparent'
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 16
   },
   selected: {
-    borderColor: 'rgba(175, 47, 47, .2)'
+    paddingTop: 12,
+    borderTopWidth: 4,
+    borderTopColor: CYAN
+  },
+  text: {
+    color: 'white',
+    fontSize: 18
   }
 })
 

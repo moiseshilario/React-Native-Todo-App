@@ -6,6 +6,8 @@ import {
   StyleSheet
 } from 'react-native'
 
+import { CYAN_DARK } from '../styles/colors'
+
 class AddTodoButton extends Component {
 
   constructor(props) {
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     marginVertical: 10,
     borderRadius: 50,
-    backgroundColor: '#2BAE2B',
+    backgroundColor: CYAN_DARK,
     elevation: 2
   },
   buttonText: {

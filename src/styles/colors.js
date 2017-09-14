@@ -1,0 +1,10 @@
+export const BLUE = '#00BBFF'
+export const WHITE_LIGHT = '#F0F0F0'
+export const DARK_BLUE = '#448aff'
+export const GREEN = '#599014'
+export const ORANGE = '#FF8C00'
+export const RED = '#d32f2f'
+
+export const CYAN = '#006870'
+export const CYAN_LIGHT = '#45969e'
+export const CYAN_DARK = '#003d45'

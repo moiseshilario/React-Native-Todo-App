@@ -17,6 +17,8 @@ import Footer from './components/footer'
 import Row from './components/row'
 import Separator from './components/separator'
 
+import { WHITE_LIGHT } from './styles/colors'
+
 const filterTodos = (filter, todos) => (
   todos.filter((todo) => {
     if (filter === 'SHOW_ALL') return true
@@ -146,7 +148,7 @@ export default class TodoApp extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: WHITE_LIGHT,
     ...Platform.select({
       ios: { paddingTop: 30 }
     })
